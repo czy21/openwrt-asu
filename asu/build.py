@@ -166,7 +166,7 @@ def _build(build_request: BuildRequest, job=None):
 
     environment: dict[str, str] = {}
 
-    image = f"{settings.base_container}:{build_request.target.replace('/', '-')}-{container_version_tag}"
+    image = f"{build_request.base_container or settings.base_container}:{build_request.target.replace('/', '-')}-{container_version_tag}"
 
     if is_snapshot_build(build_request.version):
         environment.update(
@@ -233,7 +233,7 @@ def _build(build_request: BuildRequest, job=None):
             repo_file = "repositories" if apk_mode else "repositories.conf"
             run_cmd(
                 container,
-                ["sed", "-i", f"s|https://|{cache_host}/|g", repo_file],
+                ["sed", "-i", f"s|https://downloads.openwrt.org|{cache_host}|g", repo_file],
             )
 
         returncode, job.meta["stdout"], job.meta["stderr"] = run_cmd(

@@ -12,6 +12,14 @@ REPO_URL_PATTERN = r"^https?://\S+$"
 
 
 class BuildRequest(BaseModel):
+    base_container: Annotated[
+        str,
+        Field(
+            description="""
+                imagebuilder base_container.
+            """.strip(),
+        ),
+    ] = ""
     distro: Annotated[
         str,
         Field(

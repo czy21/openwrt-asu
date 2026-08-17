@@ -127,6 +127,8 @@ def validate_request(
                 "try again later."
             )
 
+    if build_request.base_container: return ({}, None)
+
     def valid_profile(profile: str, build_request: BuildRequest) -> bool:
         profiles = app.profiles[build_request.version][build_request.target]
         if profile in profiles:
